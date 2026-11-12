@@ -1,0 +1,4 @@
+pricing\OrderItem.class
+pricing\Product.class
+pricing\OrderProcessor.class
+pricing\Order.class
