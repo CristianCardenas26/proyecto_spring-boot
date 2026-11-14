@@ -1,3 +1,4 @@
 pricing\OrderItem.class
-pricing\Order.class
 pricing\Product.class
+pricing\Customer.class
+pricing\Order.class

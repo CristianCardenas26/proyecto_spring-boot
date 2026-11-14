@@ -1,10 +1,6 @@
 package pricing;
 
 import org.junit.jupiter.api.Test;
-
-import pricing.OrderItem;
-import pricing.Product;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -14,43 +10,82 @@ public class PricingTest {
 
     @Test
     public void testVentaValida() {
-        Product product = new Product("SKU-001", new BigDecimal("50.00"), 10);
+        Product product = new Product("PROD-001", new BigDecimal("50.00"), 10);
         OrderItem item = new OrderItem(product, 2);
         Order order = new Order(Arrays.asList(item));
 
         String resultado = order.processOrder();
         assertEquals("Venta exitosa", resultado);
-        assertEquals(8, product.getStock()); 
+        assertEquals(8, product.getStock()); // Verifica que el stock se descontó correctamente (10 - 2)
     }
 
     @Test
     public void testCantidadCero() {
-        Product product = new Product("SKU-002", new BigDecimal("20.00"), 10);
+        Product product = new Product("PROD-001", new BigDecimal("50.00"), 10);
         OrderItem item = new OrderItem(product, 0);
         Order order = new Order(Arrays.asList(item));
 
         String resultado = order.processOrder();
-        assertEquals("Error: Cantidad inválida (debe ser mayor a cero)", resultado);
+        assertEquals("Error: Cantidad inválida", resultado);
+        assertEquals(10, product.getStock()); // El stock no debe modificarse
     }
 
     @Test
     public void testPrecioInvalido() {
-        Product product = new Product("SKU-003", new BigDecimal("0.00"), 10);
+        Product product = new Product("PROD-002", new BigDecimal("0.00"), 10);
         OrderItem item = new OrderItem(product, 2);
         Order order = new Order(Arrays.asList(item));
 
         String resultado = order.processOrder();
         assertEquals("Error: Precio inválido", resultado);
+        assertEquals(10, product.getStock()); // El stock no debe modificarse
     }
 
     @Test
     public void testStockInsuficiente() {
-        Product product = new Product("SKU-004", new BigDecimal("15.00"), 3);
-        OrderItem item = new OrderItem(product, 5);     
+        Product product = new Product("PROD-003", new BigDecimal("25.00"), 3);
+        OrderItem item = new OrderItem(product, 5); // Pide 5 pero solo hay 3
         Order order = new Order(Arrays.asList(item));
 
         String resultado = order.processOrder();
         assertEquals("Error: Stock insuficiente", resultado);
-        assertEquals(3, product.getStock()); 
+        assertEquals(3, product.getStock()); // El stock no debe modificarse
     }
+    @Test
+public void testClienteBloqueadoRechazado() {
+    Customer clienteBloqueado = new Customer("CUST-002", "Cliente Bloqueado", "BLOCKED");
+    Product product = new Product("PROD-001", new BigDecimal("50.00"), 10);
+    OrderItem item = new OrderItem(product, 2);
+    
+    // Creamos la orden con el cliente bloqueado
+    Order order = new Order(clienteBloqueado, Arrays.asList(item));
+
+    String resultado = order.processOrder();
+    assertEquals("Error: Cliente no válido o bloqueado", resultado);
+}
+
+@Test
+    public void testCasoLimiteStockExacto() {
+        // Caso límite exitoso: Comprar exactamente las 10 unidades disponibles
+        Product product = new Product("PROD-09", new BigDecimal("20.00"), 10);
+        OrderItem item = new OrderItem(product, 10);
+        Order order = new Order(Arrays.asList(item));
+
+        String resultado = order.processOrder();
+        assertEquals("Venta exitosa", resultado);
+        assertEquals(0, product.getStock()); // El stock debe quedar en 0 exactos
+    }
+
+    @Test
+    public void testCasoLimiteStockInsuficiente() {
+        // Caso límite de fallo: Intentar comprar 11 unidades cuando solo hay 10
+        Product product = new Product("PROD-09", new BigDecimal("20.00"), 10);
+        OrderItem item = new OrderItem(product, 11);
+        Order order = new Order(Arrays.asList(item));
+
+        String resultado = order.processOrder();
+        assertEquals("Error: Stock insuficiente", resultado);
+        assertEquals(10, product.getStock()); // El stock no debe sufrir cambios (sin cambios parciales)
+    }
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="pricing.PricingTest" time="0.143" tests="4" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="pricing.PricingTest" time="0.285" tests="7" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -14,7 +14,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CO"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-25.0.5.8-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire8059062152187521019\surefirebooter-20261111130203480_3.jar C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire8059062152187521019 2026-11-11T13-02-03_160-jvmRun1 surefire-20261111130203480_1tmp surefire_0-20261111130203480_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire15304120725119506818\surefirebooter-20261114102313617_3.jar C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire15304120725119506818 2026-11-14T10-23-12_389-jvmRun1 surefire-20261114102313617_1tmp surefire_0-20261114102313617_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Cristian Cardenas\OneDrive\entregables\Team_Banca_Basic\evidencias\M1\EP-1\target\test-classes;C:\Users\Cristian Cardenas\OneDrive\entregables\Team_Banca_Basic\evidencias\M1\EP-1\target\classes;C:\Users\Cristian Cardenas\.m2\repository\org\junit\jupiter\junit-jupiter\6.0.3\junit-jupiter-6.0.3.jar;C:\Users\Cristian Cardenas\.m2\repository\org\junit\jupiter\junit-jupiter-api\6.0.3\junit-jupiter-api-6.0.3.jar;C:\Users\Cristian Cardenas\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Cristian Cardenas\.m2\repository\org\junit\platform\junit-platform-commons\6.0.3\junit-platform-commons-6.0.3.jar;C:\Users\Cristian Cardenas\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Cristian Cardenas\.m2\repository\org\jspecify\jspecify\1.0.1\jspecify-1.0.1.jar;C:\Users\Cristian Cardenas\.m2\repository\org\junit\jupiter\junit-jupiter-params\6.0.3\junit-jupiter-params-6.0.3.jar;C:\Users\Cristian Cardenas\.m2\repository\org\junit\jupiter\junit-jupiter-engine\6.0.3\junit-jupiter-engine-6.0.3.jar;C:\Users\Cristian Cardenas\.m2\repository\org\junit\platform\junit-platform-engine\6.0.3\junit-platform-engine-6.0.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -29,7 +29,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire8059062152187521019\surefirebooter-20261111130203480_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Cristian Cardenas\AppData\Local\Temp\surefire15304120725119506818\surefirebooter-20261114102313617_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.5+8-LTS"/>
@@ -59,8 +59,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="testCantidadCero" classname="pricing.PricingTest" time="0.079"/>
-  <testcase name="testPrecioInvalido" classname="pricing.PricingTest" time="0.01"/>
-  <testcase name="testVentaValida" classname="pricing.PricingTest" time="0.002"/>
-  <testcase name="testStockInsuficiente" classname="pricing.PricingTest" time="0.002"/>
+  <testcase name="testCantidadCero" classname="pricing.PricingTest" time="0.14"/>
+  <testcase name="testCasoLimiteStockExacto" classname="pricing.PricingTest" time="0.018"/>
+  <testcase name="testCasoLimiteStockInsuficiente" classname="pricing.PricingTest" time="0.006"/>
+  <testcase name="testPrecioInvalido" classname="pricing.PricingTest" time="0.006"/>
+  <testcase name="testVentaValida" classname="pricing.PricingTest" time="0.005"/>
+  <testcase name="testStockInsuficiente" classname="pricing.PricingTest" time="0.009"/>
+  <testcase name="testClienteBloqueadoRechazado" classname="pricing.PricingTest" time="0.004"/>
 </testsuite>
