@@ -1,0 +1,12 @@
+### 1. Consultar productos (GET)
+GET http://localhost:9064/api/products
+
+### 2. Crear producto (POST)
+POST http://localhost:9064/api/products
+Content-Type: application/json
+
+{
+  "sku": "PROD-004",
+  "price": 70.00,
+  "stock": 5
+}
