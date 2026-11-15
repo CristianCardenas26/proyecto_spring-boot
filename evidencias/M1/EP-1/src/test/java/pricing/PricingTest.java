@@ -44,12 +44,12 @@ public class PricingTest {
     @Test
     public void testStockInsuficiente() {
         Product product = new Product("PROD-003", new BigDecimal("25.00"), 3);
-        OrderItem item = new OrderItem(product, 5); // Pide 5 pero solo hay 3
+        OrderItem item = new OrderItem(product, 5);
         Order order = new Order(Arrays.asList(item));
 
         String resultado = order.processOrder();
         assertEquals("Error: Stock insuficiente", resultado);
-        assertEquals(3, product.getStock()); // El stock no debe modificarse
+        assertEquals(3, product.getStock()); 
     }
     @Test
 public void testClienteBloqueadoRechazado() {
@@ -63,10 +63,10 @@ public void testClienteBloqueadoRechazado() {
     String resultado = order.processOrder();
     assertEquals("Error: Cliente no válido o bloqueado", resultado);
 }
-
+    // Caso límite exitoso: Comprar exactamente las 10 unidades disponibles
 @Test
     public void testCasoLimiteStockExacto() {
-        // Caso límite exitoso: Comprar exactamente las 10 unidades disponibles
+        
         Product product = new Product("PROD-09", new BigDecimal("20.00"), 10);
         OrderItem item = new OrderItem(product, 10);
         Order order = new Order(Arrays.asList(item));
@@ -76,9 +76,10 @@ public void testClienteBloqueadoRechazado() {
         assertEquals(0, product.getStock()); // El stock debe quedar en 0 exactos
     }
 
+    // Caso límite de fallo: Intentar comprar 11 unidades cuando solo hay 10
     @Test
     public void testCasoLimiteStockInsuficiente() {
-        // Caso límite de fallo: Intentar comprar 11 unidades cuando solo hay 10
+        
         Product product = new Product("PROD-09", new BigDecimal("20.00"), 10);
         OrderItem item = new OrderItem(product, 11);
         Order order = new Order(Arrays.asList(item));
