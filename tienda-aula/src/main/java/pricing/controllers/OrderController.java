@@ -1,7 +1,7 @@
 package pricing.controllers;
 
 import pricing.Order;
-import pricing.OrderService;
+import pricing.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

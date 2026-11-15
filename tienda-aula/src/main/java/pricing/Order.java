@@ -2,7 +2,7 @@ package pricing;
 // artributos
 public class Order {
     private Long id;
-    private String clientStatus = "ACTIVE";
+    private String clientStatus = "BLOCKED"; // Por defecto, el cliente está bloqueado
     private OrderItem item;
     private boolean confirmed = false;
 

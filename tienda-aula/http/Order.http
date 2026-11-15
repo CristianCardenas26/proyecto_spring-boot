@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
   "item": {
-    "sku": "PROD-999",
+    "sku": "PROD-787",
     "quantity": 1,
     "price": 50.00
   }
@@ -41,4 +41,20 @@ GET http://localhost:9064/api/orders
 POST http://localhost:9064/api/orders/999/confirm
 
 ### 6. Eliminar un pedido por ID (DELETE)
-DELETE http://localhost:9064/api/orders/2
+DELETE http://localhost:9064/api/orders/2S
+
+### Confirmar pedido existente (ID 2)
+POST http://localhost:9064/api/orders/2/confirm
+
+### Caso de Error: Cliente Bloqueado (Debe retornar HTTP 400)
+POST http://localhost:9064/api/orders
+Content-Type: application/json
+
+{
+  "clientStatus": "BLOCKED",
+  "item": {
+    "sku": "PROD-001",
+    "quantity": 1,
+    "price": 150.00
+  }
+}

@@ -1,5 +1,7 @@
-package pricing;
+package pricing.services;
 
+import pricing.Order;
+import pricing.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +26,10 @@ public class OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El SKU del producto es obligatorio.");
         }
 
+
+        if ("BLOCKED".equalsIgnoreCase(order.getClientStatus())) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El cliente se encuentra bloqueado y no puede realizar pedidos.");
+    }
         // 2. Validar si el SKU existe en el inventario
         Product product = availableProducts.stream()
                 .filter(p -> p.getSku().equals(order.getItem().getSku()))
@@ -53,7 +59,7 @@ public class OrderService {
 
     public Order confirmOrder(Long id) {
         Order order = orderList.stream()
-                .filter(o -> o.getId().equals(id))
+                .filter(o -> o.getId().equals(id))  // busca el di
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado con ID: " + id));
 
