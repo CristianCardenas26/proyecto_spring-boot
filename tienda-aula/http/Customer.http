@@ -2,6 +2,7 @@
 POST http://localhost:9064/api/customers
 Content-Type: application/json
 
+
 {
   "id": "CUST-01",
   "name": "cristian",
@@ -10,3 +11,11 @@ Content-Type: application/json
 
 ### Consultar clientes registrados (GET)
 GET http://localhost:9064/api/customers
+
+### 1. Solicitud RECHAZADA (Sin credenciales)
+GET http://localhost:9064/api/products
+
+
+### 2. Solicitud PERMITIDA (Con credenciales temporales)
+GET http://localhost:9064/api/products
+Authorization: Basic user 68f5fad7-2815-4863-94ed-00e7bfb7dd4b
