@@ -1,52 +1,58 @@
 package pricing.services;
 
+import pricing.Customer;
 import pricing.Order;
 import pricing.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService {
-    private List<Order> orderList = new ArrayList<>();
+
+    private final List<Order> orderList = new ArrayList<>();
     private long currentId = 1L;
 
-    // Inventario simulado para validar SKU y stock
-    private List<Product> availableProducts = new ArrayList<>(List.of(
-        new Product("PROD-001", new BigDecimal("150.00"), 10)
-    ));
+    private final CustomerService customerService;
+    private final ProductService productService;
+
+    public OrderService(CustomerService customerService, ProductService productService) {
+        this.customerService = customerService;
+        this.productService = productService;
+    }
 
     public Order createOrder(Order order) {
-        // 1. Validar que exista la línea de producto
-        if (order.getItem() == null || order.getItem().getSku() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El SKU del producto es obligatorio.");
+        // 1. Validar que el cliente exista y no esté bloqueado
+        Customer customer = customerService.getCustomerById(order.getCustomerId());
+        if (customer == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado");
+        }
+        if ("BLOCKED".equalsIgnoreCase(customer.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El cliente está bloqueado y no puede realizar pedidos");
         }
 
-
-        if ("BLOCKED".equalsIgnoreCase(order.getClientStatus())) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El cliente se encuentra bloqueado y no puede realizar pedidos.");
-    }
-        // 2. Validar si el SKU existe en el inventario
-        Product product = availableProducts.stream()
-                .filter(p -> p.getSku().equals(order.getItem().getSku()))
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SKU no encontrado en inventario."));
-
-        // 3. Validar cantidad vs Stock
-        if (order.getItem().getQuantity() <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a cero.");
-        }
-        if (order.getItem().getQuantity() > product.getStock()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stock insuficiente para la cantidad solicitada.");
+        // 2. Validar que la orden tenga un ítem y que el producto exista
+        if (order.getItem() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La orden debe contener un producto");
         }
 
-        // 4. Precargar datos por defecto y guardar
+        Product product = productService.getProductBySku(order.getItem().getSku());
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        }
+
+        // 3. Validar stock disponible
+        int requestedQty = order.getItem().getQuantity();
+        if (product.getStock() < requestedQty) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stock insuficiente para el producto solicitado");
+        }
+
+        // 4. Descontar stock y guardar la orden
+        product.setStock(product.getStock() - requestedQty);
         order.setId(currentId++);
-        order.setClientStatus("ACTIVE");
         order.setConfirmed(false);
         orderList.add(order);
 
@@ -59,19 +65,18 @@ public class OrderService {
 
     public Order confirmOrder(Long id) {
         Order order = orderList.stream()
-                .filter(o -> o.getId().equals(id))  // busca el di
+                .filter(o -> o.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orden no encontrada"));
 
         order.setConfirmed(true);
         return order;
     }
-    
-    public void deleteOrder(Long id) {
-    boolean removed = orderList.removeIf(o -> o.getId().equals(id));
-    if (!removed) {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado para eliminar con ID: " + id);
-    }
- }
 
+    public void deleteOrder(Long id) {
+        boolean removed = orderList.removeIf(o -> o.getId().equals(id));
+        if (!removed) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Orden no encontrada");
+        }
+    }
 }

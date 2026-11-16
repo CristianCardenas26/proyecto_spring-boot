@@ -1,29 +1,27 @@
 package pricing.controllers;
 
 import pricing.Product;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import pricing.services.OrderService;
+import pricing.services.ProductService;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private List<Product> productList = new ArrayList<>();
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public List<Product> getProducts() {
-        return productList;
+        return productService.getAllProducts();
     }
 
     @PostMapping
     public Product addProduct(@RequestBody Product product) {
-        productList.add(product);
-        return product;
+        return productService.addProduct(product);
     }
 }

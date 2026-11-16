@@ -12,7 +12,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    // Inyección de dependencias por constructor
+    // Inyección de dependencias del servicio de órdenes
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
@@ -33,8 +33,8 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-    orderService.deleteOrder(id);
-    return ResponseEntity.noContent().build(); // Retorna un código 204 No Content exitoso
-}
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+        return ResponseEntity.noContent().build();
+    }
 }

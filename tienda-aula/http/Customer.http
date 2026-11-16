@@ -1,0 +1,12 @@
+### Caso con el nuevo modelo de cliente (CUST-01)
+POST http://localhost:9064/api/customers
+Content-Type: application/json
+
+{
+  "id": "CUST-01",
+  "name": "cristian",
+  "status": "ACTIVE"
+}
+
+### Consultar clientes registrados (GET)
+GET http://localhost:9064/api/customers
