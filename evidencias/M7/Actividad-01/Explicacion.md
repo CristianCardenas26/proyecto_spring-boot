@@ -1,0 +1,2 @@
+# segunda imagen 
+En este fragmento, el método *createOrder* actúa puramente como un coordinador. En lugar de saturarse haciendo validaciones complejas línea por línea, aplica el *principio de delegación* llamando a métodos privados especializados, primero ejecuta *validateCustomer* pasándole el ID para verificar que el cliente exista y esté activo, y luego ejecuta *validateAndGetProduct* para comprobar la existencia del producto y el stock disponible, guardando ese resultado en la variable product para continuar con el proceso.

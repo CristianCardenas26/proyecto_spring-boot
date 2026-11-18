@@ -1,4 +1,4 @@
-package pricing.config;
+/* package pricing.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,4 +23,8 @@ public class SecurityConfig {
 
         return http.build();
     }
-}
+} */
+
+
+
+//Authorization: Basic user 68f5fad7-2815-4863-94ed-00e7bfb7dd4b

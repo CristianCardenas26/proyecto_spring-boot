@@ -12,6 +12,10 @@ Content-Type: application/json
 ### Consultar clientes registrados (GET)
 GET http://localhost:9064/api/customers
 
+### 4. Bloquear el Cliente Activo (Para probar la restricción)
+PATCH http://localhost:9064/api/customers/CUST-02/Block
+Content-Type: application/json
+
 ### 1. Solicitud RECHAZADA (Sin credenciales)
 GET http://localhost:9064/api/products
 

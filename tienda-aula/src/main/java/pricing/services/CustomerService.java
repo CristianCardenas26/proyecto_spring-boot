@@ -51,4 +51,13 @@ public class CustomerService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Customer blockCustomer(String id) {
+    Customer customer = getCustomerById(id);
+    if (customer == null) {
+        throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Cliente no encontrado");
+    }
+    customer.setStatus("BLOCKED");
+    return customer;
+}
 }

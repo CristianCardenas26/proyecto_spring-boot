@@ -1,0 +1,3 @@
+Se provocó un error intencional en la ejecucion del *testSubtotalValido* cambiando un valor esperado en la con la intencion de comprovar el funcionamiento y la sencibilidad de las aserciones de las pruebas unitarias:
+
+se realizó una orden de compra de 3 productos por un valor de 50.00 donde el resultado esperado seria 180.00 provocando el error controlado pues el resultado arrojado por la prueba es diferente al valor esperado.

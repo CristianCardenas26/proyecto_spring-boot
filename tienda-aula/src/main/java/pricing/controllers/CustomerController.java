@@ -24,4 +24,9 @@ public class CustomerController {
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
+
+    @PatchMapping("/{id}/block")
+    public Customer blockCustomer(@PathVariable String id) {
+       return customerService.blockCustomer(id);
+}
 }
